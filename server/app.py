@@ -12,6 +12,8 @@ app.json.compact = False
 CORS(app)
 migrate = Migrate(app, db)
 
+db.init_app(app)
+
 #!Make first Route here:
 #*Example:
 # @app.route('/movies', methods=['GET'])
