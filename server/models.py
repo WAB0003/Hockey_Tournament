@@ -27,8 +27,58 @@ class Team(db.Model, SerializerMixin):
     away_games = db.relationship("Game", foreign_keys="Game.away_team_id", back_populates="away_team")
     players = db.relationship("Player", back_populates="team")
 
+    # @validates("name")
+    # def validate_name(self, key, name):
+    #     if name == True:
+    #         return name
+    #     raise ValueError("Team name can not be blank")
+    
+    # @validates("team_ranking")
+    # def validate_team_ranking(self, key, team_ranking):
+    #     if team_ranking >= 0 and team_ranking <= 11:
+    #         return team_ranking
+    #     raise ValueError("Team must have a ranking between 1 and 10")
+
     def __repr__(self):
         return f"Team: {self.name} <{self.id}>"
+    
+class Game(db.Model, SerializerMixin):
+    __tablename__ = "games"
+
+    serialize_rules = ("-created_at", "-updated_at", "-team.games", "-player.games", "-home_team", "-away_team")
+
+    id = db.Column(db.Integer, nullable=False, primary_key=True)
+    home_points = db.Column(db.Integer)
+    away_points = db.Column(db.Integer)
+    
+    mvp_player_id = db.Column(db.Integer, db.ForeignKey("players.id"))
+    home_team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
+    away_team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
+
+    home_team = db.relationship("Team", foreign_keys=[home_team_id], back_populates="home_games")
+    away_team = db.relationship("Team", foreign_keys=[away_team_id], back_populates="away_games")
+    mvp_player = db.relationship("Player", back_populates="mvp_games")
+
+    # @validates("home_team_id")
+    # def validate_home_team_id(self, key, home_team_id):
+    #     if home_team_id == True:
+    #         return home_team_id
+    #     raise ValueError("You need to supply a home team")
+    
+    # @validates("away_team_id")
+    # def validate_away_team_id(self, key, away_team_id):
+    #     if away_team_id == True:
+    #         return away_team_id
+    #     raise ValueError("You need to supply an away team")
+
+    def __repr__(self):
+        return f"Game: {self.id}"
+    
+    # Advanced repr -- need to figure out
+    # def __repr__(self):
+    #     home_team = session.query(Team).filter(Team.id == self.home_team_id).one_or_none()
+    #     away_team = session.query(Team).filter(Team.id == self.away_team_id).one_or_none()
+    #     return f"Game: {self.id} -- Home: {home_team.name}, Away: {away_team.name}"
 
 class Player(db.Model, SerializerMixin):
     __tablename__ = "players"
@@ -48,34 +98,20 @@ class Player(db.Model, SerializerMixin):
     team = db.relationship("Team", back_populates="players")
     mvp_games = db.relationship("Game", back_populates="mvp_player")
 
+    # @validates("name")
+    # def validate_name(self, key, name):
+    #     if name == True:
+    #         return name
+    #     raise ValueError("Player name can not be blank")
+    
+    # @validates("player_ranking")
+    # def validate_player_ranking(self, key, player_ranking):
+    #     if player_ranking >= 0 and player_ranking <= 11:
+    #         return player_ranking
+    #     raise ValueError("Player must have a ranking between 1 and 10")
+
     def __repr__(self):
         return f"Player: {self.name} <{self.id}>"
-
-class Game(db.Model, SerializerMixin):
-    __tablename__ = "games"
-
-    serialize_rules = ("-created_at", "-updated_at", "-team.games", "-player.games")
-
-    id = db.Column(db.Integer, nullable=False, primary_key=True)
-    home_points = db.Column(db.Integer)
-    away_points = db.Column(db.Integer)
-    
-    mvp_player_id = db.Column(db.Integer, db.ForeignKey("players.id"))
-    home_team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
-    away_team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
-
-    home_team = db.relationship("Team", foreign_keys=[home_team_id], back_populates="home_games")
-    away_team = db.relationship("Team", foreign_keys=[away_team_id], back_populates="away_games")
-    mvp_player = db.relationship("Player", back_populates="mvp_games")
-
-    def __repr__(self):
-        return f"Game: {self.id}"
-    
-    # Advanced repr -- need to figure out
-    # def __repr__(self):
-    #     home_team = session.query(Team).filter(Team.id == self.home_team_id).one_or_none()
-    #     away_team = session.query(Team).filter(Team.id == self.away_team_id).one_or_none()
-    #     return f"Game: {self.id} -- Home: {home_team.name}, Away: {away_team.name}"
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
