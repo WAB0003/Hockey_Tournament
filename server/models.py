@@ -64,8 +64,8 @@ class Game(db.Model, SerializerMixin):
     home_team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
     away_team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
 
-    home_team = db.relationship("Team", back_populates="home_games")
-    away_team = db.relationship("Team", back_populates="away_games")
+    home_team = db.relationship("Team", foreign_keys=[home_team_id], back_populates="home_games")
+    away_team = db.relationship("Team", foreign_keys=[away_team_id], back_populates="away_games")
     mvp_player = db.relationship("Player", back_populates="mvp_games")
 
     def __repr__(self):

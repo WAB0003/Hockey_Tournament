@@ -49,7 +49,7 @@ def make_players():
     players = []
     for team in range(team_qty):
         for each_player in range(players_per_team):
-            player = Player(name=fake.name(), team_ID=team)
+            player = Player(name=fake.name(), team_id=team)
             players.append(player)
             # print(f"name:{player.name} | Team_ID:{player.team_ID}")
             
