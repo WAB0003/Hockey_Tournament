@@ -11,8 +11,9 @@ fake = Faker()
 
 #!SEED Team Data
 def make_teams():
+    print("_______________TEAM TABLE______________")
     #Delete any existing teams from database
-    #* Team.query.delete()
+    Team.query.delete()
     print("Deleted Teams from database....")
     print("Creating Teams for database....")
     team_names = [
@@ -30,14 +31,15 @@ def make_teams():
         team = Team(name=name)
         teams.append(team)
     
-    # db.session.add_all(teams)
-    # db.session.commit()
+    db.session.add_all(teams)
+    db.session.commit()
     print(f"{len(teams)} Teams have been seeded into database....\n")
     
         
 #!SEED PLAYER DATA 
 def make_players():
-    #* Player.query.delete()                      
+    print("______________PLAYER TABLE______________")
+    Player.query.delete()                      
     print("Deleted all players from database....")
     #Get team quantity
     team_qty = len(Team.query.all()) #8 were used 
@@ -47,7 +49,7 @@ def make_players():
     print(f"Creating {players_per_team} players per team for a total of {total_players} players....")
     
     players = []
-    for team in range(team_qty):
+    for team in range(1,team_qty+1):
         for each_player in range(players_per_team):
             player = Player(name=fake.name(), team_id=team)
             players.append(player)
@@ -55,7 +57,7 @@ def make_players():
             
     db.session.add_all(players)
     db.session.commit()
-    print(f"{len(total_players)} players have been seeded into database....\n")
+    print(f"{(total_players)} players have been seeded into database....\n")
     
 
 if __name__ == '__main__':
