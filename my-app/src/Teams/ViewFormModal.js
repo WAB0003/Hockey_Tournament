@@ -1,6 +1,7 @@
 import React from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { Button, Header, Image, Modal, Form } from 'semantic-ui-react'
+import AddTeamForm from './AddTeamForm'
 
 const ViewFormModal = () => {
     const [open, setOpen] = React.useState(false)
@@ -19,13 +20,7 @@ const ViewFormModal = () => {
                 
                 <Modal.Description>
                     <Header>Add Team Form</Header>
-                    <Form>
-                        <Form.Field>
-                            <label>Team Name</label>
-                            <input placeholder='Enter Team Name Here' />
-                        </Form.Field>
-                        <Button type='submit'>Submit</Button>
-                    </Form>
+                    <AddTeamForm />
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions>
