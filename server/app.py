@@ -48,7 +48,7 @@ def team_by_id(id):
         if team:
             db.session.delete(team)
             db.session.commit()
-            return {"message":"Team Deleted"}, 204
+            return {"message":"Team Deleted"}, 200
         return {"error": "404: Team not found"}, 404
     elif request.method == "PATCH":
         fields = request.get_json()
@@ -94,7 +94,7 @@ def player_by_id(id):
         if player:
             db.session.delete(player)
             db.session.commit()
-            return {"message":"Player Deleted"}, 204
+            return {"message":"Player Deleted"}, 200
         return {"error": "404: Player not found"}, 404
     elif request.method == "PATCH":
         fields = request.get_json()
@@ -141,7 +141,7 @@ def game_by_id(id):
         if game:
             db.session.delete(game)
             db.session.commit()
-            return {"message":"game Deleted"}, 204
+            return {"message":"game Deleted"}, 200
         return {"error": "404: Game not found"}, 404
     elif request.method == "PATCH":
         fields = request.get_json()
