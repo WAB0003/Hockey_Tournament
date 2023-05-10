@@ -17,14 +17,17 @@ class Team(db.Model, SerializerMixin):
     # serialize_rules = ("-created_at", "-updated_at", "-players.team", "-home_games.home_team", "-away_games.away_team")----> Code im playing aroudn with
     serialize_rules = ("-created_at", 
                        "-updated_at",
+                       
                        "-players.team", 
-                       "-players.mvp_games", 
+                       "-players.mvp_games",
+                    
                        "-home_games.home_team",
                        "-home_games.away_team",
                        "-home_games.home_team_id", 
                        "-home_games.away_team_id",
                        "-home_games.mvp_player_id",
-                       "-home_games.mvp_player",   
+                       "-home_games.mvp_player",
+                          
                        "-away_games.home_team",
                        "-away_games.away_team",
                        "-away_games.home_team_id", 
@@ -63,7 +66,34 @@ class Game(db.Model, SerializerMixin):
     __tablename__ = "games"
 
     # serialize_rules = ("-created_at", "-updated_at", "-team.games", "-player.games", "-home_team", "-away_team")
-    serialize_rules = ("-created_at", "-updated_at", "-home_team.home_games", "-away_team.away_games", "-mvp_player.mvp_games")
+    serialize_rules = ("-created_at", 
+                       "-updated_at",
+                       
+                       "-mvp_player_id",
+                       "-mvp_player.mvp_games",
+                       "-mvp_player.player_ranking",
+                       "-mvp_player.team",
+                       "-mvp_player.team_id",
+                       "-mvp_player.times_mvp",
+                       "-mvp_player.total_points",
+                       
+                       "-home_team_id",
+                       "-home_team.away_games",
+                       "-home_team.games_won",
+                       "-home_team.home_games",
+                       "-home_team.away_games",
+                       "-home_team.players",
+                       "-home_team.team_ranking",
+                       "-home_team.total_points",
+                       
+                       "-away_team_id",
+                       "-away_team.away_games",
+                       "-away_team.games_won",
+                       "-away_team.home_games",
+                       "-away_team.away_games",
+                       "-away_team.players",
+                       "-away_team.team_ranking",
+                       "-away_team.total_points",)
 
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     home_points = db.Column(db.Integer)
@@ -101,7 +131,17 @@ class Game(db.Model, SerializerMixin):
 class Player(db.Model, SerializerMixin):
     __tablename__ = "players"
 
-    serialize_rules = ("-created_at", "-updated_at", "-team.players", "-mvp_games.mvp_player")
+    # serialize_rules = ("-created_at", "-updated_at", "-team.players", "-mvp_games.mvp_player")
+    serialize_rules = ("-created_at", 
+                       "-updated_at",
+                        
+                       "-team.players", 
+                       "-team.away_games", 
+                       "-team.home_games", 
+                       "-team.games_won",
+                       "-team.team_ranking", 
+                       "-team.total_points",
+                       "-mvp_games.mvp_player")
 
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     name = db.Column(db.String, nullable=False)
