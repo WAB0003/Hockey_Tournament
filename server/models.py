@@ -13,10 +13,25 @@ db = SQLAlchemy()
 class Team(db.Model, SerializerMixin):
     __tablename__ = "teams"
 
-    # serialize_rules = ("-created_at", "-updated_at", "-players.team", "home_games")
-    # serialize_rules = ("-created_at", "-updated_at", "-players.team", "-home_games.home_team", "-away_games.away_team")
-    serialize_rules = ("-created_at", "-updated_at","-players.team", "-players.mvp_games", "-home_games", "-away_games")
-    
+    # serialize_rules = ("-created_at", "-updated_at", "-players.team", "home_games")----> Wally's Code Originally
+    # serialize_rules = ("-created_at", "-updated_at", "-players.team", "-home_games.home_team", "-away_games.away_team")----> Code im playing aroudn with
+    serialize_rules = ("-created_at", 
+                       "-updated_at",
+                       "-players.team", 
+                       "-players.mvp_games", 
+                       "-home_games.home_team",
+                       "-home_games.away_team",
+                       "-home_games.home_team_id", 
+                       "-home_games.away_team_id",
+                       "-home_games.mvp_player_id",
+                       "-home_games.mvp_player",   
+                       "-away_games.home_team",
+                       "-away_games.away_team",
+                       "-away_games.home_team_id", 
+                       "-away_games.away_team_id",
+                       "-away_games.mvp_player_id",
+                       "-away_games.mvp_player",
+                       )     
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     name = db.Column(db.String, nullable=False)
     total_points = db.Column(db.Integer)
