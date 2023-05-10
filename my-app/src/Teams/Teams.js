@@ -33,6 +33,18 @@ const Teams = () => {
         const updatedTeamList = allTeams.filter((team)=>team.id !== deletedTeam.id)
         setAllTeams(updatedTeamList)
     }
+    //!Handle Adding A Player to a Team
+    const handleAddPlayer = (playerName, team) => {
+        fetch('http://127.0.0.1:5555/players', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: playerName, team_id: team.id }),
+        })
+        .then(response => response.json())
+        .then(newPlayer => {
+            setAllTeams(teams => teams.map(t => t.id === team.id ? {...t, players: [...t.players, newPlayer]} : t));
+        })
+    }
 
     //!Variable for displaying All Teams
     const displayTeams = allTeams.map((team)=>{
@@ -44,7 +56,7 @@ const Teams = () => {
                 <Table.Cell>{team.games_won}</Table.Cell>
                 <Table.Cell>{team.home_games.length}</Table.Cell>
                 <Table.Cell>{team.away_games.length}</Table.Cell>
-                <Table.Cell>{<ViewPlayerModal key={team.id} team={team} players={team.players} />}</Table.Cell>
+                <Table.Cell>{<ViewPlayerModal key={team.id} team={team} players={team.players} addPlayer={handleAddPlayer} />}</Table.Cell>
                 <Table.Cell>{<Button onClick={()=>deleteTeam(team)}>Delete Team</Button>}</Table.Cell>
             </Table.Row>
         )
