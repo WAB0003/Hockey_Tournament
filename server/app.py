@@ -131,7 +131,7 @@ def games():
 
 @app.route("/games/<int:id>", methods=["GET", "DELETE", "PATCH"])
 def game_by_id(id):
-    game = Player.query.filter(Player.id == id).one_or_none()
+    game = Game.query.filter(Game.id == id).one_or_none()
     if request.method == "GET":
         if game:
             return game.to_dict()
