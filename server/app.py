@@ -48,7 +48,7 @@ def team_by_id(id):
         if team:
             db.session.delete(team)
             db.session.commit()
-            return {"Team Deleted"}, 204
+            return {"message":"Team Deleted"}, 204
         return {"error": "404: Team not found"}, 404
     elif request.method == "PATCH":
         fields = request.get_json()
@@ -94,7 +94,7 @@ def player_by_id(id):
         if player:
             db.session.delete(player)
             db.session.commit()
-            return {"Player Deleted"}, 204
+            return {"message":"Player Deleted"}, 204
         return {"error": "404: Player not found"}, 404
     elif request.method == "PATCH":
         fields = request.get_json()
@@ -131,7 +131,7 @@ def games():
 
 @app.route("/games/<int:id>", methods=["GET", "DELETE", "PATCH"])
 def game_by_id(id):
-    game = Player.query.filter(Player.id == id).one_or_none()
+    game = Game.query.filter(Game.id == id).one_or_none()
     if request.method == "GET":
         if game:
             return game.to_dict()
@@ -141,7 +141,7 @@ def game_by_id(id):
         if game:
             db.session.delete(game)
             db.session.commit()
-            return {"game Deleted"}, 204
+            return {"message":"game Deleted"}, 204
         return {"error": "404: Game not found"}, 404
     elif request.method == "PATCH":
         fields = request.get_json()
