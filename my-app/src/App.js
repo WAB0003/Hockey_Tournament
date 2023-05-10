@@ -1,13 +1,26 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom"
 import { TournamentProvider } from "./Games/TournamentContext";
 import Tournament from "./Games/Tournament";
 import Navbar from "./Navbar";
+
+import Teams from "./Teams/Teams";
+import Players from "./Players/Players";
+
+
+
 
 const App = () => {
   return (
     <TournamentProvider>
       <Navbar />
-      <Tournament />
+      <Routes>
+        <Route exact path="/"/>
+        <Route path="/teams" element={<Teams/>}/>
+        <Route path="/players" element={<Players />}/>
+        <Route path="/games" element={<Tournament />}/>
+        
+      </Routes>
     </TournamentProvider>
   );
 }
