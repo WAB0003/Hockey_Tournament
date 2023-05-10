@@ -6,7 +6,9 @@ export const TournamentContext = createContext();
 export const TournamentProvider = ({ children }) => {
     const [games, setGames] = useState([]);
     const [teams, setTeams] = useState([]);
+    const [currentGame, setCurrentGame] = useState(null);
     const [currentRound, setCurrentRound] = useState(1);
+    const [isResultFormVisible, setIsResultFormVisible] = useState(false);
 
     const getTeams = async () => {
         try {
@@ -26,12 +28,14 @@ export const TournamentProvider = ({ children }) => {
         }
     }
 
-    const addGameResult = async (gameId, homePoints, awayPoints, mvpPlayerId) => {
+    const addGameResult = async (gameId, homePoints, awayPoints, mvpPlayerId, newHomeTeamId, newAwayTeamId) => {
         try {
-            const response = await axios.patch("http://localhost:5555/games/${gameId}", {
+            const response = await axios.patch(`http://localhost:5555/games/${gameId}`, {
                 home_points: homePoints,
                 away_points: awayPoints,
                 mvp_player_id: mvpPlayerId,
+                home_team_id: newHomeTeamId,
+                away_team_id: newAwayTeamId
             });
             setGames(games.map(game => game.id === gameId ? response.data : game));            
         } catch (error) {
@@ -39,6 +43,21 @@ export const TournamentProvider = ({ children }) => {
         }
     }
 
+    const determineWinner = (homeScore, awayScore, homeTeam, awayTeam) => {
+        return homeScore > awayScore ? homeTeam : awayTeam;
+    }
+
+    const updateNextGame = async (nextGameId, isHomeTeam, winnerTeamId) => {
+        try {
+          const response = await axios.patch(`http://localhost:5555/games/${nextGameId}`, {
+            [isHomeTeam ? 'home_team_id' : 'away_team_id']: winnerTeamId
+          });
+          setGames(games.map(game => game.id === nextGameId ? response.data : game));            
+        } catch (error) {
+          console.error("Failed to update next game", error);
+        }
+    }
+      
     return (
         <TournamentContext.Provider
             value={{
@@ -47,8 +66,12 @@ export const TournamentProvider = ({ children }) => {
                 getTeams,
                 getGames,
                 addGameResult,
+                currentGame,
+                setCurrentGame,
                 currentRound,
-                setCurrentRound
+                setCurrentRound, 
+                isResultFormVisible,
+                setIsResultFormVisible
             }}
         >
             {children}

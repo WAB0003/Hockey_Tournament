@@ -7,7 +7,7 @@ const ResultForm = () => {
     const [awayScore, setAwayScore] = useState(0);
     const [mvp, setMvp] = useState('');
 
-    const { currentGame, refreshGames } = useContext(TournamentContext);
+    const { currentGame, refreshGames, determineWinner, updateNextGame, setIsResultFormVisible } = useContext(TournamentContext);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -19,11 +19,16 @@ const ResultForm = () => {
         };
 
         try {
-            await axios.patch("/games/${currentGame.id}", result);
+            await axios.patch(`/games/${currentGame.id}`, result);
             refreshGames();
+            const winnerTeam = determineWinner(homeScore, awayScore, currentGame.home_team, currentGame.away_team);
+            let nextGameId = Math.ceil(currentGame.id / 2) + 4;
+            let isHomeTeam = currentGame.id % 2 === 1;
+            await updateNextGame(nextGameId, isHomeTeam, winnerTeam.id);
         } catch (error) {
             console.error("Error updating game result: ", error);
         }
+        setIsResultFormVisible(false);
     };
 
     return (

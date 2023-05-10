@@ -154,6 +154,10 @@ def game_by_id(id):
                 game.away_points = fields["away_points"]
             if "mvp_player_id" in fields:
                 game.mvp_player_id = fields["mvp_player_id"]
+            if "home_team_id" in fields:
+                game.home_team_id = fields["home_team_id"]
+            if "away_team_id" in fields:
+                game.away_team_id = fields["away_team_id"]
             db.session.commit()
             return game.to_dict(), 200
         else:
