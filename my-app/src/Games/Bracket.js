@@ -3,11 +3,19 @@ import OneGame from "./OneGame";
 import { TournamentContext } from "./TournamentContext";
 
 const Bracket = () => {
-  const { games } = useContext(TournamentContext);
+  const { games, currentRound } = useContext(TournamentContext);
 
   return (
     <div className="bracket">
-      {games.map(game => (
+      {games.filter(game => {
+        if (currentRound === 1) {
+          return game.id <= 4;
+        } else if (currentRound === 2) {
+          return game.id > 4 && game.id <=6;
+        } else if (currentRound === 3) {
+          return game.id > 6;
+        }
+      }).map(game => (
         <OneGame key={game.id} game={game} />
       ))}
     </div>
@@ -15,37 +23,3 @@ const Bracket = () => {
 };
 
 export default Bracket;
-
-
-/* <div className="tree">
-<ul>
-  <li>
-    <a href="#">Parent</a>
-    <ul>
-      <li>
-        <a href="#">Child</a>
-        <ul>
-          <li>
-            <a href="#">Grand child</a>
-            <ul>
-              <li>
-                <a href="#">Great Grand Child</a>
-              </li>
-              <ul>
-              <li>
-                <a href="#">Great Grand Child</a>
-              </li>
-              <ul>
-              <li>
-                <a href="#">Great Grand Child</a>
-              </li>
-            </ul>
-            </ul>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-</div> */

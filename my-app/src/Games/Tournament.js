@@ -11,7 +11,12 @@ const Tournament = () => {
         getGames();
     }, []);
 
-    return <Bracket />;
+    return (
+        <>
+            <h1>Hello Tournament</h1>
+            <Bracket />
+        </>
+    )
 }
 
 export default Tournament;

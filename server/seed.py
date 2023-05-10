@@ -116,7 +116,7 @@ def make_games():
     db.session.add(all_games[2])
     db.session.commit()
     
-    #Game3
+    #Game4
     all_games[3].home_points = randint(0,10)
     all_games[3].away_points = randint(0,10)
     all_games[3].mvp_player_id = randint(0,12)
