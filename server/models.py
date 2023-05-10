@@ -13,8 +13,10 @@ db = SQLAlchemy()
 class Team(db.Model, SerializerMixin):
     __tablename__ = "teams"
 
-    serialize_rules = ("-created_at", "-updated_at", "-players.team", "-games.team")
-
+    # serialize_rules = ("-created_at", "-updated_at", "-players.team", "home_games")
+    # serialize_rules = ("-created_at", "-updated_at", "-players.team", "-home_games.home_team", "-away_games.away_team")
+    serialize_rules = ("-created_at", "-updated_at","-players.team", "-players.mvp_games", "-home_games", "-away_games")
+    
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     name = db.Column(db.String, nullable=False)
     total_points = db.Column(db.Integer)
@@ -45,7 +47,8 @@ class Team(db.Model, SerializerMixin):
 class Game(db.Model, SerializerMixin):
     __tablename__ = "games"
 
-    serialize_rules = ("-created_at", "-updated_at", "-team.games", "-player.games", "-home_team", "-away_team")
+    # serialize_rules = ("-created_at", "-updated_at", "-team.games", "-player.games", "-home_team", "-away_team")
+    serialize_rules = ("-created_at", "-updated_at", "-home_team.home_games", "-away_team.away_games", "-mvp_player.mvp_games")
 
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     home_points = db.Column(db.Integer)
@@ -83,7 +86,7 @@ class Game(db.Model, SerializerMixin):
 class Player(db.Model, SerializerMixin):
     __tablename__ = "players"
 
-    serialize_rules = ("-created_at", "-updated_at", "-team.players", "-mvp_games.player")
+    serialize_rules = ("-created_at", "-updated_at", "-team.players", "-mvp_games.mvp_player")
 
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     name = db.Column(db.String, nullable=False)
