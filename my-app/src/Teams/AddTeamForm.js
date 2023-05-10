@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { Button, Header, Image, Modal, Form } from 'semantic-ui-react'
 import { useState } from 'react'
 
-const AddTeamForm = () =>{
+const AddTeamForm = ({handleAddTeam}) =>{
 
     // Create state to handle form:
     const [formData, setFormData] = useState({
@@ -22,7 +22,29 @@ const AddTeamForm = () =>{
 
     //! Handle Submit
     const handleSubmit = () => {
+        //Create new team object that pull information from formData
+        const newTeamObj = {
+            name: name,
+          }
         
+        //add team to database
+        fetch("http://127.0.0.1:5555/teams", {
+            method: "POST",
+            headers: {
+              "Content-Type":"application/json",
+            },
+            body:JSON.stringify(newTeamObj)
+          })
+          .then((r)=>r.json())
+          .then((newTeam)=>{
+            handleAddTeam(newTeam)
+          } )
+
+        //Reset Form
+        setFormData({
+            name:"",
+        })
+
     }
 
 

@@ -14,6 +14,27 @@ const Teams = () => {
         .then(teams=>setAllTeams(teams))
     },[])
 
+    //!Function to handle Added Team from Form
+    const handleAddTeam = (newTeam)=>{
+        setAllTeams((prevTeamList)=>[...prevTeamList,newTeam])
+    }
+
+    //!Delete Team
+    const deleteTeam = (team) => {
+        // console.log(id)
+        fetch(`http://127.0.0.1:5555/teams/${team.id}`,{
+        method: "DELETE",
+        })
+        .then(r=>r.json())
+        .then(()=>handleDeleteTeam(team))
+    }
+    //!Handle Delete
+    const handleDeleteTeam = (deletedTeam) =>{
+        const updatedTeamList = allTeams.filter((team)=>team.id !== deletedTeam.id)
+        setAllTeams(updatedTeamList)
+    }
+
+    //!Variable for displaying All Teams
     const displayTeams = allTeams.map((team)=>{
         return (
             <Table.Row>
@@ -24,7 +45,7 @@ const Teams = () => {
                 <Table.Cell>{team.home_games.length}</Table.Cell>
                 <Table.Cell>{team.away_games.length}</Table.Cell>
                 <Table.Cell>{<ViewPlayerModal key={team.id} team={team} players={team.players} />}</Table.Cell>
-                <Table.Cell>{<Button>Delete Team</Button>}</Table.Cell>
+                <Table.Cell>{<Button onClick={()=>deleteTeam(team)}>Delete Team</Button>}</Table.Cell>
             </Table.Row>
         )
     })
@@ -34,7 +55,7 @@ const Teams = () => {
         <div>
             <h1 style={{paddingTop:"30px", textAlign:'center'}}>Team Roster</h1>
             <Container textAlign='center'>
-                <ViewFormModal />
+                <ViewFormModal handleAddTeam={handleAddTeam} />
                 <Table celled>
                     <Table.Header>
                         <Table.Row>

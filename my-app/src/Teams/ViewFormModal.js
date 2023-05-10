@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { Button, Header, Image, Modal, Form } from 'semantic-ui-react'
 import AddTeamForm from './AddTeamForm'
 
-const ViewFormModal = () => {
+const ViewFormModal = ({handleAddTeam}) => {
     const [open, setOpen] = React.useState(false)
 
     
@@ -13,14 +13,14 @@ const ViewFormModal = () => {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button>View Players</Button>}
+        trigger={<Button>Add Team</Button>}
         >
             <Modal.Header>Team Name</Modal.Header>
             <Modal.Content image>
                 
                 <Modal.Description>
                     <Header>Add Team Form</Header>
-                    <AddTeamForm />
+                    <AddTeamForm handleAddTeam = {handleAddTeam}/>
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions>
