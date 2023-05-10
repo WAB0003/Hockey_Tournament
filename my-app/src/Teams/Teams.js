@@ -1,7 +1,8 @@
 import React , {useState, useEffect}  from 'react';
 import 'semantic-ui-css/semantic.min.css'
-import { Table, Container, Header } from 'semantic-ui-react'
-import ModalTest from './ModalTest';
+import { Table, Container, Header, Button } from 'semantic-ui-react'
+import ViewPlayerModal from './ViewPlayerModal';
+import ViewFormModal from './ViewFormModal';
 
 
 const Teams = () => {
@@ -22,18 +23,18 @@ const Teams = () => {
                 <Table.Cell>{team.games_won}</Table.Cell>
                 <Table.Cell>{team.home_games.length}</Table.Cell>
                 <Table.Cell>{team.away_games.length}</Table.Cell>
-                <Table.Cell>{<ModalTest key={team.id} team={team} players={team.players} />}</Table.Cell>
+                <Table.Cell>{<ViewPlayerModal key={team.id} team={team} players={team.players} />}</Table.Cell>
+                <Table.Cell>{<Button>Delete Team</Button>}</Table.Cell>
             </Table.Row>
         )
     })
 
-    
-
 
     return(
         <div>
+            <h1 style={{paddingTop:"30px", textAlign:'center'}}>Team Roster</h1>
             <Container textAlign='center'>
-                <h1 style={{paddingTop:"30px"}}>Team Roster</h1>
+                <ViewFormModal />
                 <Table celled>
                     <Table.Header>
                         <Table.Row>
@@ -44,6 +45,7 @@ const Teams = () => {
                             <Table.HeaderCell>Home Games</Table.HeaderCell>
                             <Table.HeaderCell>Away Games</Table.HeaderCell>
                             <Table.HeaderCell>Players</Table.HeaderCell>
+                            <Table.HeaderCell>Options</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 

@@ -2,7 +2,7 @@ import React from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 
-const ModalTest = ({players, team}) => {
+const ViewPlayerModal = ({players, team}) => {
     const [open, setOpen] = React.useState(false)
 
     const displayPlayers = players.map((player)=>{
@@ -35,6 +35,6 @@ const ModalTest = ({players, team}) => {
 
   }
   
-  export default ModalTest;
+  export default ViewPlayerModal;
 
   
