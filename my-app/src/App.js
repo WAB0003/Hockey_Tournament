@@ -1,74 +1,59 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Switch } from "react-router-dom"
+// import {createGlobalStyle} from "styled-components"
+import {useEffect, useState, React} from "react"
 import { TournamentProvider } from "./Games/TournamentContext";
 import Tournament from "./Games/Tournament";
 import Navbar from "./Navbar";
-
 import Teams from "./Teams/Teams";
 import Players from "./Players/Players";
-
-
-
+import Authentication from "./Authentication";
 
 const App = () => {
-  return (
+
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    fetchUser()
+  },[])
+
+  const fetchUser = () => {
+    fetch("/authorized")
+      .then(res => {
+        if(res.ok) {
+          res.json()
+          .then(setUser)
+        } else {
+          setUser(null)
+        }
+      })
+  }
+
+  const updateUser = (user) => setUser(user)
+  if (!user) return (  
     <TournamentProvider>
       <Navbar />
       <Routes>
         <Route exact path="/"/>
         <Route path="/teams" element={<Teams/>}/>
         <Route path="/players" element={<Players />}/>
+        <Route path="/login" element={<Authentication updateUser={updateUser}/>}/>
+      </Routes>
+    </TournamentProvider>  
+  )
+
+  return (
+    <TournamentProvider>
+      <Navbar updateUser={updateUser}/>
+      {/* <Navbar updateUser={updateUser} handleEdit={handleEdit}/> DON'T THINK WE NEED handleEdit*/}
+      <Routes>
+        <Route exact path="/"/>
+        <Route path="/teams" element={<Teams/>}/>
+        <Route path="/players" element={<Players />}/>
         <Route path="/games" element={<Tournament />}/>
-        
+        <Route path="/login" element={<Authentication updateUser={updateUser}/>}/>
       </Routes>
     </TournamentProvider>
   );
 }
 
 export default App;
-
-
-
-// import Navbar from "./Navbar"
-// import "./App.css"
-// function App() {
-//   return (
-//     <div>
-//       <Navbar />
-//       <div className="tree">
-//         <ul>
-//           <li>
-//             <a href="#">Parent</a>
-//             <ul>
-//               <li>
-//                 <a href="#">Child</a>
-//                 <ul>
-//                   <li>
-//                     <a href="#">Grand child</a>
-//                     <ul>
-//                       <li>
-//                         <a href="#">Great Grand Child</a>
-//                       </li>
-//                       <ul>
-//                       <li>
-//                         <a href="#">Great Grand Child</a>
-//                       </li>
-//                       <ul>
-//                       <li>
-//                         <a href="#">Great Grand Child</a>
-//                       </li>
-//                     </ul>
-//                     </ul>
-//                     </ul>
-//                   </li>
-//                 </ul>
-//               </li>
-//             </ul>
-//           </li>
-//         </ul>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default App;

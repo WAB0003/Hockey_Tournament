@@ -1,6 +1,9 @@
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response, jsonify, abort, session
+from flask_restful import Resource
+from werkzeug.exceptions import NotFound, Unauthorized
 from flask_cors import CORS
 from flask_migrate import Migrate
+from config import app, db, api
 
 from models import db, Team, Player, Game, User        #!Add models here
 
@@ -14,6 +17,18 @@ CORS(app)
 migrate = Migrate(app, db)
 
 db.init_app(app)
+
+@app.before_request
+def check_if_logged():
+    open_access_list = [
+        "signup",
+        "login",
+        "logout",
+        "authorized",
+        "productions"
+    ]
+    if (request.endpoint) not in open_access_list and (not session.get("user_id")):
+        raise Unauthorized
 
 @app.route("/")
 def home():
@@ -162,6 +177,71 @@ def game_by_id(id):
             return game.to_dict(), 200
         else:
             return {"error": "404: Game not found"}, 404
+
+class Signup(Resource):
+    def post(self):
+        form_json = request.get_json()
+        new_user = User(
+            username=form_json["username"],
+            email=form_json["email"],
+            password_hash=form_json["password"]
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+        session["user_id"] = new_user.id
+        response = make_response(new_user.to_dict(), 201)
+        return response
+api.add_resource(Signup, "/signup")
+
+class Login(Resource):
+    def post(self):
+        user = User.query.filter_by(username=request.get_json()["username"]).first()
+        if user and user.authenticate(request.get_json()["password"]):
+            session["user_id"] = user.id
+            response = make_response(user.to_dict(), 200)
+            return response
+        else:
+            raise Unauthorized
+api.add_resource(Login, "/login")
+
+class AuthorizedSession(Resource):
+    def get(self):
+        try:
+            user = User.query.filter_by(id=session["user_id"]).first()
+            response = make_response(
+                user.to_dict(),
+                200
+            )
+            return response
+        except:
+            raise Unauthorized
+api.add_resource(AuthorizedSession, "/authorized")
+
+class Logout(Resource):
+    def delete(self):
+        session["user_id"] = None
+        response = make_response("", 204)
+        return response
+api.add_resource(Logout, "/logout")
+
+@app.errorhandler(NotFound)
+def handle_not_found(e):
+    response = make_response(
+        "Not Found: Sorry, the resource you're looking for doesn't exist",
+        404
+    )
+
+    return response
+
+@app.errorhandler(Unauthorized)
+def handle_unauthorized(e):
+    response = make_response(
+        {"message": "Unauthorized: You must be logged in to do that"},
+        401
+    )
+
+    return response
 
 if __name__ == '__main__':
     app.run(port=5555)

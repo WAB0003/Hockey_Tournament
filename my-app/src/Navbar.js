@@ -1,5 +1,22 @@
+// import { useState } from "react"  <-- Probably not needed
+import { useNavigate } from "react-router-dom"
+
 import "./navbar.css"
-export default function Navbar() {
+export default function Navbar({updateUser}) {
+  // const [menu, setMenu] = useState(false) <-- Probably not needed
+  const navigate = useNavigate()
+
+// Added to handle logouts
+  const handleLogout = () => {
+    fetch("/logout", {method: "DELETE"})
+      .then(res => {
+        if (res.ok) {
+          updateUser(null)
+          navigate.push("/login")
+        }
+      })
+  }
+
     return (
       <nav className="navigation">
         <a href="/" className="brand-name">
@@ -32,6 +49,10 @@ export default function Navbar() {
             <li>
               <a href="/games">Bracket</a>
             </li>
+            <li>
+              <a href="/login">Login/Signup</a>
+            </li>
+            <li onClick={handleLogout}>Logout</li>
           </ul>
         </div>
       </nav>
