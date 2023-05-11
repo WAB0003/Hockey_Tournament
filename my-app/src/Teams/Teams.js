@@ -49,7 +49,7 @@ const Teams = () => {
     //!Variable for displaying All Teams
     const displayTeams = allTeams.map((team)=>{
         return (
-            <Table.Row>
+            <Table.Row key={team.id}>
                 <Table.Cell>{team.id}</Table.Cell>
                 <Table.Cell>{team.name}</Table.Cell>
                 <Table.Cell>{team.total_points}</Table.Cell>
