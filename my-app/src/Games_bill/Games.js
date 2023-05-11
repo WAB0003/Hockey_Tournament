@@ -5,6 +5,9 @@ import { Table, Container, Header, Button, Grid, Form, Input } from 'semantic-ui
 
 
 const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
+    const[winner,setWinner]=useState("")
+    let winningTeam = ""
+    
 
     //!HANDLE GAME 1 RESULTS
     const [Game1Data, setGame1Data] = useState({
@@ -318,6 +321,56 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           .then(finalGame_object=>handleGameDisplay(finalGame_object))
     }
 
+    //!HANDLE FINAL GAME RESULTS
+    const [finalGameData, setfinalGameData] = useState({
+        home_points: "",
+        away_points: "",
+    })
+
+    const handleFinalChange = (e) => {
+        setfinalGameData({...finalGameData, 
+        [e.target.name]:e.target.value,
+        })
+    }
+
+    const handleFinalSubmit = () => {
+        //Create new team object that pull information from formData
+        const finalGameObjupate = {
+            home_points:finalGameData.home_points,
+            away_points:finalGameData.away_points
+          }
+
+
+          fetch ("http://127.0.0.1:5555/games/7", {
+              method: "PATCH",
+              headers: {
+                "Content-Type":"application/json",
+              },
+              body: JSON.stringify(finalGameObjupate)
+          })
+          .then((r)=>r.json())
+          .then(finalGame_object=>handleFINALWinner(finalGame_object))
+    }
+
+    //* FIGURES OUT Winner of Final Game
+    const handleFINALWinner = (finalGame_object)=>{
+        // console.log(finalGame_object)
+        
+        if (finalGame_object.home_points>finalGame_object.away_points){
+            winningTeam = finalGame_object.home_team
+
+        } else {
+            winningTeam = finalGame_object.away_team
+
+        }
+        console.log(winningTeam.name)
+        // console.log(game5home_team)
+        // debugger
+        
+    }
+
+
+
     //!Function for handling all game displayed in tournament
     const handleGameDisplay = (game_obj)=>{
         const updatedGames = allGames.map((game)=>{
@@ -384,8 +437,18 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
                     </Grid.Column>
                     <Grid.Column>
                         <h1>FINAL</h1>
-                        <h3>{allGames[6].home_team.name}</h3>
-                        <h3>{allGames[6].away_team.name}</h3>
+                        <Form>
+                            <Form.Field inline>
+                                <label>{allGames[6].home_team.name}</label>
+                                <input placeholder='Enter Score' name="home_points" value={finalGameData.home_points} onChange={handleFinalChange}></input>
+                            </Form.Field>
+                            <Form.Field inline>
+                                <label>{allGames[6].away_team.name}</label>
+                                <input placeholder='Enter Score' name="away_points" value={finalGameData.away_points} onChange={handleFinalChange}></input>
+                            </Form.Field>
+                            <Button type='submit'onClick={handleFinalSubmit}>Submit Final</Button>
+                        </Form>
+                        <h3>{winningTeam}</h3>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
@@ -405,8 +468,6 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
                     </Grid.Column>
                     <Grid.Column>
                         <h1>Game 6</h1>
-                        <h3>{allGames[5].home_team.name}</h3>
-                        <h3>{allGames[5].away_team.name}</h3>
                         <Form>
                             <Form.Field inline>
                                 <label>{allGames[5].home_team.name }</label>

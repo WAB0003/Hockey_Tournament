@@ -30,20 +30,6 @@ const App = () => {
       .then(teams=>setAllTeams(teams))
   },[])
 
-  const handleGameDisplay = (game_obj)=>{
-    const updatedGames = allGames.map((game)=>{
-      if(game.id===game_obj.id) {
-        return game_obj;
-      } else {
-        return game;
-      }
-    })
-    setAllGames(()=>updatedGames)
-   }
-  
-
-
-
 
   return (
     <TournamentProvider>
@@ -52,7 +38,7 @@ const App = () => {
         <Route exact path="/"/>
         <Route path="/teams" element={<Teams/>}/>
         <Route path="/players" element={<Players />}/>
-        <Route path="/games" element={<Games allTeams={allTeams} setAllTeams={setAllTeams} allGames={allGames} setAllGames={setAllGames} handleGameDisplay={handleGameDisplay}/>}/>
+        <Route path="/games" element={<Games allTeams={allTeams} setAllTeams={setAllTeams} allGames={allGames} setAllGames={setAllGames}/>}/>
         
       </Routes>
     </TournamentProvider>
