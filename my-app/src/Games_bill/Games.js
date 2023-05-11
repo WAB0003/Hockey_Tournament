@@ -463,7 +463,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
                                 <label>{allGames[2].away_team.name}</label>
                                 <input placeholder='Enter Score' name="away_points" value={Game3Data.away_points} onChange={handleGame3Change}></input>
                             </Form.Field>
-                            <Button type='submit'onClick={handleGame3Submit}>Submit Game 2</Button>
+                            <Button type='submit'onClick={handleGame3Submit}>Submit Game 3</Button>
                         </Form>
                     </Grid.Column>
                     <Grid.Column>
@@ -493,7 +493,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
                                 <label>{allGames[3].away_team.name}</label>
                                 <input placeholder='Enter Score' name="away_points" value={Game4Data.away_points} onChange={handleGame4Change}></input>
                             </Form.Field>
-                            <Button type='submit'onClick={handleGame4Submit}>Submit Game 2</Button>
+                            <Button type='submit'onClick={handleGame4Submit}>Submit Game 4</Button>
                         </Form>
                     </Grid.Column>
                 </Grid.Row>
