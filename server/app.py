@@ -30,9 +30,9 @@ db.init_app(app)
 #     if (request.endpoint) not in open_access_list and (not session.get("user_id")):
 #         raise Unauthorized
 
-@app.route("/")
-def home():
-    return ""
+# @app.route("/")
+# def home():
+#     return ""
 
 @app.route("/teams", methods=["GET", "POST"])
 def teams():
@@ -181,6 +181,7 @@ def game_by_id(id):
 class Signup(Resource):
     def post(self):
         form_json = request.get_json()
+        print(form_json)
         new_user = User(
             username=form_json["username"],
             email=form_json["email"],
