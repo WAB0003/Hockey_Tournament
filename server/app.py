@@ -178,24 +178,43 @@ def game_by_id(id):
         else:
             return {"error": "404: Game not found"}, 404
 
-class Signup(Resource):
-    def post(self):
-        form_json = request.get_json()
-        new_user = User(
-            username=form_json["username"],
-            email=form_json["email"],
-            password_hash=form_json["password"]
-        )
+#! /signup POST Decorator Route
+@app.route("/signup", methods=["POST"])
+def signup():
+    if request.method == "POST":
+        fields = request.get_json()
+        try:
+            new_user = User(
+                username=fields.get("username"),
+                email=fields.get("email"),
+                password_hash=fields.get("password")
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            session["user_id"] = new_user.id
+            return new_user.to_dict(), 201
+        except ValueError:
+            return {"error": "404: This comes from new route in app.py"}, 404
 
-        db.session.add(new_user)
-        db.session.commit()
-        # newestUser = User.query.order_by(User.id.desc()).first()
-        # session["user_id"] = newestUser.id
-        session["user_id"] = new_user.id
-        # response = make_response(newestUser.to_dict(), 201)
-        response = make_response(new_user.to_dict(), 201)
-        return response
-api.add_resource(Signup, "/signup")
+#! /signup POST Resource Route
+# class Signup(Resource):
+#     def post(self):
+#         form_json = request.get_json()
+#         new_user = User(
+#             username=form_json["username"],
+#             email=form_json["email"],
+#             password_hash=form_json["password"]
+#         )
+
+#         db.session.add(new_user)
+#         db.session.commit()
+#         # CONNOR SUGGESTION: newestUser = User.query.order_by(User.id.desc()).first()
+#         # CONNOR SUGGESTION: session["user_id"] = newestUser.id
+#         session["user_id"] = new_user.id
+#         # CONNOR SUGGESTION: response = make_response(newestUser.to_dict(), 201)
+#         response = make_response(new_user.to_dict(), 201)
+#         return response
+# api.add_resource(Signup, "/signup")
 
 class Login(Resource):
     def post(self):

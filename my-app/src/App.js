@@ -12,6 +12,8 @@ import Authentication from "./Authentication";
 const App = () => {
 
   const [user, setUser] = useState(null)
+  const [allTeams,setAllTeams]=useState([])
+  const [allGames,setAllGames]=useState([])
 
   useEffect(() => {
     fetchUser()
@@ -28,6 +30,19 @@ const App = () => {
         }
       })
   }
+  //*Get All Games
+  useEffect(()=>{
+      fetch("/games")
+      .then(r=>r.json())
+      .then(games=>setAllGames(games))
+  },[])
+  
+  //*Get All Teams
+  useEffect(()=>{
+      fetch("/teams")
+      .then(r=>r.json())
+      .then(teams=>setAllTeams(teams))
+  },[])
 
   const updateUser = (user) => setUser(user)
   if (!user) return (  
@@ -37,6 +52,7 @@ const App = () => {
         <Route exact path="/"/>
         <Route path="/teams" element={<Teams/>}/>
         <Route path="/players" element={<Players />}/>
+        <Route path="/games" element={<Games allTeams={allTeams} setAllTeams={setAllTeams} allGames={allGames} setAllGames={setAllGames}/>}/>
         <Route path="/login" element={<Authentication updateUser={updateUser}/>}/>
       </Routes>
     </TournamentProvider>  
@@ -50,7 +66,7 @@ const App = () => {
         <Route exact path="/"/>
         <Route path="/teams" element={<Teams/>}/>
         <Route path="/players" element={<Players />}/>
-        <Route path="/games" element={<Games />}/>
+        <Route path="/games" element={<Games allTeams={allTeams} setAllTeams={setAllTeams} allGames={allGames} setAllGames={setAllGames}/>}/>
         <Route path="/login" element={<Authentication updateUser={updateUser}/>}/>
       </Routes>
     </TournamentProvider>

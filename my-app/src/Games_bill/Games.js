@@ -2,11 +2,9 @@ import React , {useState, useEffect}  from 'react';
 import 'semantic-ui-css/semantic.min.css'
 import { Table, Container, Header, Button, Grid, Form, Input } from 'semantic-ui-react'
 
-
-
 const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
-    const[winner,setWinner]=useState("")
-    let winningTeam = ""
+    const[winningTeam,setWinningTeam]=useState("")
+    
     
 
     //!HANDLE GAME 1 RESULTS
@@ -355,12 +353,15 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
     //* FIGURES OUT Winner of Final Game
     const handleFINALWinner = (finalGame_object)=>{
         // console.log(finalGame_object)
+        let winningTeamName
         
         if (finalGame_object.home_points>finalGame_object.away_points){
-            winningTeam = finalGame_object.home_team
+            winningTeamName = finalGame_object.home_team.name
+            setWinningTeam(winningTeamName)
 
         } else {
-            winningTeam = finalGame_object.away_team
+            winningTeamName = finalGame_object.away_team.name
+            setWinningTeam(winningTeamName)
 
         }
         console.log(winningTeam.name)
@@ -383,126 +384,129 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
         setAllGames(()=>updatedGames)
        }
 
-
-
     if (allTeams.length === 9){
-        return(
-            <div>
-            <h1>Bracket</h1>
-            <Grid columns={3} divided>
-                <Grid.Row>
-                    <Grid.Column>
-                        <h2>Game 1</h2>
-                        <Form>
-                            <Form.Field inline>
-                                <label>{allGames[0].home_team.name }</label>
-                                <input placeholder='Enter Score' name="home_points" value={Game1Data.home_points} onChange={handleGame1Change}></input>
-                            </Form.Field>
-                            <Form.Field inline>
-                                <label>{allGames[0].away_team.name }</label>
-                                <input placeholder='Enter Score' name="away_points" value={Game1Data.away_points} onChange={handleGame1Change}></input>
-                            </Form.Field>
-                            <Button type='submit'onClick={handleGame1Submit}>Submit Game 1</Button>
-                        </Form>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column>
-                        <h2>Game 2</h2>
-                        <Form>
-                            <Form.Field inline>
-                                <label>{allGames[1].home_team.name}</label>
-                                <input placeholder='Enter Score' name="home_points" value={Game2Data.home_points} onChange={handleGame2Change}></input>
-                            </Form.Field>
-                            <Form.Field inline>
-                                <label>{allGames[1].away_team.name}</label>
-                                <input placeholder='Enter Score' name="away_points" value={Game2Data.away_points} onChange={handleGame2Change}></input>
-                            </Form.Field>
-                            <Button type='submit'onClick={handleGame2Submit}>Submit Game 2</Button>
-                        </Form>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <h1>Game 5</h1>
-                        <Form>
-                            <Form.Field inline>
-                                <label>{allGames[4].home_team.name}</label>
-                                <input placeholder='Enter Score' name="home_points" value={Game5Data.home_points} onChange={handleGame5Change}></input>
-                            </Form.Field>
-                            <Form.Field inline>
-                                <label>{allGames[4].away_team.name}</label>
-                                <input placeholder='Enter Score' name="away_points" value={Game5Data.away_points} onChange={handleGame5Change}></input>
-                            </Form.Field>
-                            <Button type='submit'onClick={handleGame5Submit}>Submit Game 5</Button>
-                        </Form>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <h1>FINAL</h1>
-                        <Form>
-                            <Form.Field inline>
-                                <label>{allGames[6].home_team.name}</label>
-                                <input placeholder='Enter Score' name="home_points" value={finalGameData.home_points} onChange={handleFinalChange}></input>
-                            </Form.Field>
-                            <Form.Field inline>
-                                <label>{allGames[6].away_team.name}</label>
-                                <input placeholder='Enter Score' name="away_points" value={finalGameData.away_points} onChange={handleFinalChange}></input>
-                            </Form.Field>
-                            <Button type='submit'onClick={handleFinalSubmit}>Submit Final</Button>
-                        </Form>
-                        <h3>{winningTeam}</h3>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column>
-                        <h2>Game 3</h2>
-                        <Form>
-                            <Form.Field inline>
-                                <label>{allGames[2].home_team.name}</label>
-                                <input placeholder='Enter Score' name="home_points" value={Game3Data.home_points} onChange={handleGame3Change}></input>
-                            </Form.Field>
-                            <Form.Field inline>
-                                <label>{allGames[2].away_team.name}</label>
-                                <input placeholder='Enter Score' name="away_points" value={Game3Data.away_points} onChange={handleGame3Change}></input>
-                            </Form.Field>
-                            <Button type='submit'onClick={handleGame3Submit}>Submit Game 3</Button>
-                        </Form>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <h1>Game 6</h1>
-                        <Form>
-                            <Form.Field inline>
-                                <label>{allGames[5].home_team.name }</label>
-                                <input placeholder='Enter Score' name="home_points" value={Game6Data.home_points} onChange={handleGame6Change}></input>
-                            </Form.Field>
-                            <Form.Field inline>
-                                <label>{allGames[5].away_team.name }</label>
-                                <input placeholder='Enter Score' name="away_points" value={Game6Data.away_points} onChange={handleGame6Change}></input>
-                            </Form.Field>
-                            <Button type='submit'onClick={handleGame6Submit}>Submit Game 6</Button>
-                        </Form>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column>
-                        <h2>Game 4</h2>
-                        <Form>
-                            <Form.Field inline>
-                                <label>{allGames[3].home_team.name}</label>
-                                <input placeholder='Enter Score' name="home_points" value={Game4Data.home_points} onChange={handleGame4Change}></input>
-                            </Form.Field>
-                            <Form.Field inline>
-                                <label>{allGames[3].away_team.name}</label>
-                                <input placeholder='Enter Score' name="away_points" value={Game4Data.away_points} onChange={handleGame4Change}></input>
-                            </Form.Field>
-                            <Button type='submit'onClick={handleGame4Submit}>Submit Game 4</Button>
-                        </Form>
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
-            </div>
-        )
-    } else {
-        return <h1>There Can Only Be 8 Teams</h1>
-    }
+    return(
+        <div>
+        <h1>Bracket</h1>
+        <Grid columns={3} divided>
+            <Grid.Row>
+                <Grid.Column>
+                    <h2>Game 1</h2>
+                    <Form>
+                        <Form.Field inline>
+                            <label>{allGames[0].home_team.name }</label>
+                            <input placeholder='Enter Score' name="home_points" value={Game1Data.home_points} onChange={handleGame1Change}></input>
+                        </Form.Field>
+                        <Form.Field inline>
+                            <label>{allGames[0].away_team.name }</label>
+                            <input placeholder='Enter Score' name="away_points" value={Game1Data.away_points} onChange={handleGame1Change}></input>
+                        </Form.Field>
+                        <Button type='submit'onClick={handleGame1Submit}>Submit Game 1</Button>
+                    </Form>
+                </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+                <Grid.Column>
+                    <h2>Game 2</h2>
+                    <Form>
+                        <Form.Field inline>
+                            <label>{allGames[1].home_team.name}</label>
+                            <input placeholder='Enter Score' name="home_points" value={Game2Data.home_points} onChange={handleGame2Change}></input>
+                        </Form.Field>
+                        <Form.Field inline>
+                            <label>{allGames[1].away_team.name}</label>
+                            <input placeholder='Enter Score' name="away_points" value={Game2Data.away_points} onChange={handleGame2Change}></input>
+                        </Form.Field>
+                        <Button type='submit'onClick={handleGame2Submit}>Submit Game 2</Button>
+                    </Form>
+                </Grid.Column>
+                <Grid.Column>
+                    <h1>Game 5</h1>
+                    <Form>
+                        <Form.Field inline>
+                            <label>{allGames[4].home_team.name}</label>
+                            <input placeholder='Enter Score' name="home_points" value={Game5Data.home_points} onChange={handleGame5Change}></input>
+                        </Form.Field>
+                        <Form.Field inline>
+                            <label>{allGames[4].away_team.name}</label>
+                            <input placeholder='Enter Score' name="away_points" value={Game5Data.away_points} onChange={handleGame5Change}></input>
+                        </Form.Field>
+                        <Button type='submit'onClick={handleGame5Submit}>Submit Game 5</Button>
+                    </Form>
+                </Grid.Column>
+                <Grid.Column>
+                    <h1>FINAL</h1>
+                    <Form>
+                        <Form.Field inline>
+                            <label>{allGames[6].home_team.name}</label>
+                            <input placeholder='Enter Score' name="home_points" value={finalGameData.home_points} onChange={handleFinalChange}></input>
+                        </Form.Field>
+                        <Form.Field inline>
+                            <label>{allGames[6].away_team.name}</label>
+                            <input placeholder='Enter Score' name="away_points" value={finalGameData.away_points} onChange={handleFinalChange}></input>
+                        </Form.Field>
+                        <Button type='submit'onClick={handleFinalSubmit}>Submit Final</Button>
+                    </Form>
+                    <h3>{winningTeam}</h3>
+                </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+                <Grid.Column>
+                    <h2>Game 3</h2>
+                    <Form>
+                        <Form.Field inline>
+                            <label>{allGames[2].home_team.name}</label>
+                            <input placeholder='Enter Score' name="home_points" value={Game3Data.home_points} onChange={handleGame3Change}></input>
+                        </Form.Field>
+                        <Form.Field inline>
+                            <label>{allGames[2].away_team.name}</label>
+                            <input placeholder='Enter Score' name="away_points" value={Game3Data.away_points} onChange={handleGame3Change}></input>
+                        </Form.Field>
+                        <Button type='submit'onClick={handleGame3Submit}>Submit Game 3</Button>
+                    </Form>
+                </Grid.Column>
+                <Grid.Column>
+                    <h1>Game 6</h1>
+                    <Form>
+                        <Form.Field inline>
+                            <label>{allGames[5].home_team.name }</label>
+                            <input placeholder='Enter Score' name="home_points" value={Game6Data.home_points} onChange={handleGame6Change}></input>
+                        </Form.Field>
+                        <Form.Field inline>
+                            <label>{allGames[5].away_team.name }</label>
+                            <input placeholder='Enter Score' name="away_points" value={Game6Data.away_points} onChange={handleGame6Change}></input>
+                        </Form.Field>
+                        <Button type='submit'onClick={handleGame6Submit}>Submit Game 6</Button>
+                    </Form>
+                </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+                <Grid.Column>
+                    <h2>Game 4</h2>
+                    <Form>
+                        <Form.Field inline>
+                            <label>{allGames[3].home_team.name}</label>
+                            <input placeholder='Enter Score' name="home_points" value={Game4Data.home_points} onChange={handleGame4Change}></input>
+                        </Form.Field>
+                        <Form.Field inline>
+                            <label>{allGames[3].away_team.name}</label>
+                            <input placeholder='Enter Score' name="away_points" value={Game4Data.away_points} onChange={handleGame4Change}></input>
+                        </Form.Field>
+                        <Button type='submit'onClick={handleGame4Submit}>Submit Game 4</Button>
+                    </Form>
+                </Grid.Column>
+            </Grid.Row>
+        </Grid>
+        </div>
+    )
+} else {
+    return <h1>There Can Only Be 8 Teams</h1>
+}
 }
 
 export default Games;
+
+
+
+
+
