@@ -1,9 +1,10 @@
 import React , {useState, useEffect}  from 'react';
 import 'semantic-ui-css/semantic.min.css'
 import { Table, Container, Header, Button, Grid, Form, Input } from 'semantic-ui-react'
+import FinalWinner from './FinalWinner';
 
 const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
-    const[winningTeam,setWinningTeam]=useState("")
+    const[winningTeam,setWinningTeam]=useState([])
     
     
 
@@ -25,7 +26,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
             home_points:Game1Data.home_points,
             away_points:Game1Data.away_points
           }
-          console.log(game1Objupate)
+        //   console.log(game1Objupate)
 
           fetch ("/games/1", {
               method: "PATCH",
@@ -233,7 +234,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
             home_points:Game5Data.home_points,
             away_points:Game5Data.away_points
           }
-          console.log(game5Objupate)
+        //   console.log(game5Objupate)
 
           fetch ("/games/5", {
               method: "PATCH",
@@ -353,22 +354,35 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
     //* FIGURES OUT Winner of Final Game
     const handleFINALWinner = (finalGame_object)=>{
         // console.log(finalGame_object)
-        let winningTeamName
+        let winningTeamID
         
         if (finalGame_object.home_points>finalGame_object.away_points){
-            winningTeamName = finalGame_object.home_team.name
-            setWinningTeam(winningTeamName)
+            winningTeamID = finalGame_object.home_team.id
+            // console.log(winningTeamID)
+            fetch(`/teams/${winningTeamID}`)
+            .then(r=>r.json())
+            .then(team=>setWinningTeam(team))
+            
+
+            //Fetch Winning Team:
+            // setWinningTeam(winningTeamObj)
 
         } else {
-            winningTeamName = finalGame_object.away_team.name
-            setWinningTeam(winningTeamName)
+            winningTeamID = finalGame_object.away_team.id
+            // console.log(winningTeamID)
+            fetch(`/teams/${winningTeamID}`)
+            .then(r=>r.json())
+            .then(team=>setWinningTeam(team))
+            // setWinningTeam(winningTeamObj)
 
         }
-        console.log(winningTeam.name)
+        // console.log(winningTeam.name)
         // console.log(game5home_team)
         // debugger
         
     }
+
+    console.log(Object.keys(winningTeam).length)
 
 
 
@@ -447,7 +461,8 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
                         </Form.Field>
                         <Button type='submit'onClick={handleFinalSubmit}>Submit Final</Button>
                     </Form>
-                    <h3>{winningTeam}</h3>
+                    {Object.keys(winningTeam).length>0 ? <FinalWinner winningTeam={winningTeam}/> : <h1></h1> }
+                    {/* <FinalWinner winningTeam={winningTeam}/> */}
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
