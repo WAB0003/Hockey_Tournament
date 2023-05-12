@@ -2,7 +2,7 @@ import { Routes, Route, Switch } from "react-router-dom"
 // import {createGlobalStyle} from "styled-components"
 import {useEffect, useState, React} from "react"
 import { TournamentProvider } from "./Games/TournamentContext";
-import Tournament from "./Games/Tournament";
+// import Tournament from "./Games/Tournament";
 import Navbar from "./Navbar";
 import Teams from "./Teams/Teams";
 import Players from "./Players/Players";

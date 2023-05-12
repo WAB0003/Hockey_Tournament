@@ -17,11 +17,12 @@ def make_teams():
     print("Deleted Teams from database....")
     print("Creating Teams for database....")
     team_names = [
+        "No Team",
         "Kraken", 
         "Avalanche", 
         "Stars", 
         "Canucks", 
-        "Burins", 
+        "Bruins", 
         "Maple Leafs", 
         "Panthers",
         "Wild"
@@ -71,7 +72,7 @@ def make_games():
     total_games = 7       #!Change input of total games
     
     all_empty_games = []
-    for each_game in range(total_games):
+    for each_game in range(total_games+1):
         empty_game = Game()
    
         all_empty_games.append(empty_game)
@@ -88,8 +89,8 @@ def make_games():
     all_games[0].away_points = randint(0,10)
     all_games[0].mvp_player_id = randint(0,12)
     #*Change for teams
-    all_games[0].home_team_id = all_teams[0].id
-    all_games[0].away_team_id = all_teams[1].id
+    all_games[0].home_team_id = all_teams[1].id
+    all_games[0].away_team_id = all_teams[2].id
     
     db.session.add(all_games[0])
     db.session.commit()
@@ -99,8 +100,8 @@ def make_games():
     all_games[1].away_points = randint(0,10)
     all_games[1].mvp_player_id = randint(0,12)
     #*Change for teams
-    all_games[1].home_team_id = all_teams[2].id
-    all_games[1].away_team_id = all_teams[3].id
+    all_games[1].home_team_id = all_teams[3].id
+    all_games[1].away_team_id = all_teams[4].id
     
     db.session.add(all_games[1])
     db.session.commit()
@@ -110,8 +111,8 @@ def make_games():
     all_games[2].away_points = randint(0,10)
     all_games[2].mvp_player_id = randint(0,12)
     #*Change for teams
-    all_games[2].home_team_id = all_teams[4].id
-    all_games[2].away_team_id = all_teams[5].id
+    all_games[2].home_team_id = all_teams[5].id
+    all_games[2].away_team_id = all_teams[6].id
     
     db.session.add(all_games[2])
     db.session.commit()
@@ -121,8 +122,26 @@ def make_games():
     all_games[3].away_points = randint(0,10)
     all_games[3].mvp_player_id = randint(0,12)
     #*Change for teams
-    all_games[3].home_team_id = all_teams[6].id
-    all_games[3].away_team_id = all_teams[7].id
+    all_games[3].home_team_id = all_teams[7].id
+    all_games[3].away_team_id = all_teams[8].id
+    
+    #*Game5
+    all_games[4].home_team_id = all_teams[0].id
+    all_games[4].away_team_id = all_teams[0].id
+    
+    #*Game6
+    all_games[5].home_team_id = all_teams[0].id
+    all_games[5].away_team_id = all_teams[0].id
+    
+    #*Game7
+    all_games[6].home_team_id = all_teams[0].id
+    all_games[6].away_team_id = all_teams[0].id
+    
+    #*Game8
+    all_games[7].home_team_id = all_teams[0].id
+    all_games[7].away_team_id = all_teams[0].id
+    
+    
     
     db.session.add(all_games[3])
     db.session.commit()
