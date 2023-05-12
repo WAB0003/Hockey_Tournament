@@ -1,7 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import MetaData
-from sqlalchemy.orm import validates, sessionmaker
+from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -11,7 +11,7 @@ metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
 
-db = SQLAlchemy()
+# db = SQLAlchemy()
 
 class Team(db.Model, SerializerMixin):
     __tablename__ = "teams"

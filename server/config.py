@@ -12,8 +12,8 @@ app.json.compact = False
 app.secret_key = 'My Secret Key'
 
 db = SQLAlchemy()
-migrate = Migrate(app, db)
 
+migrate = Migrate(app, db)
 db.init_app(app)
 
 bcrypt = Bcrypt(app)

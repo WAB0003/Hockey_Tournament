@@ -2,21 +2,22 @@ from flask import Flask, request, make_response, jsonify, abort, session
 from flask_restful import Resource
 from werkzeug.exceptions import NotFound, Unauthorized
 from flask_cors import CORS
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
+
 from config import app, db, api
 
-from models import db, Team, Player, Game, User        #!Add models here
+from models import Team, Player, Game, User        #!Add models here
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
-app.debug = True
+# app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.json.compact = False
+# app.debug = True
 
 CORS(app)
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
-db.init_app(app)
+# db.init_app(app)
 
 # @app.before_request
 # def check_if_logged():
@@ -229,6 +230,8 @@ class Logout(Resource):
         return response
 api.add_resource(Logout, "/logout")
 
+# api.init_app(app)
+
 @app.errorhandler(NotFound)
 def handle_not_found(e):
     # response = make_response(
@@ -251,4 +254,4 @@ def handle_unauthorized(e):
 
 
 if __name__ == '__main__':
-    app.run(port=5555)
+    app.run(port=5555, debug=True)
