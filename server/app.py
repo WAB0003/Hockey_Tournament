@@ -18,17 +18,17 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 
-@app.before_request
-def check_if_logged():
-    open_access_list = [
-        "signup",
-        "login",
-        "logout",
-        "authorized",
-        "productions"
-    ]
-    if (request.endpoint) not in open_access_list and (not session.get("user_id")):
-        raise Unauthorized
+# @app.before_request
+# def check_if_logged():
+#     open_access_list = [
+#         "signup",
+#         "login",
+#         "logout",
+#         "authorized",
+#         "productions"
+#     ]
+#     if (request.endpoint) not in open_access_list and (not session.get("user_id")):
+#         raise Unauthorized
 
 @app.route("/")
 def home():
@@ -189,7 +189,10 @@ class Signup(Resource):
 
         db.session.add(new_user)
         db.session.commit()
+        # newestUser = User.query.order_by(User.id.desc()).first()
+        # session["user_id"] = newestUser.id
         session["user_id"] = new_user.id
+        # response = make_response(newestUser.to_dict(), 201)
         response = make_response(new_user.to_dict(), 201)
         return response
 api.add_resource(Signup, "/signup")
@@ -216,7 +219,7 @@ class AuthorizedSession(Resource):
             return response
         except:
             raise Unauthorized
-api.add_resource(AuthorizedSession, "/authorized")
+api.add_resource(AuthorizedSession, "/authorized", endpoint="authorized")
 
 class Logout(Resource):
     def delete(self):
@@ -227,21 +230,24 @@ api.add_resource(Logout, "/logout")
 
 @app.errorhandler(NotFound)
 def handle_not_found(e):
-    response = make_response(
-        "Not Found: Sorry, the resource you're looking for doesn't exist",
-        404
-    )
+    # response = make_response(
+    #     "Not Found: Sorry, the resource you're looking for doesn't exist",
+    #     404
+    # )
 
-    return response
+    # return response
+    return {"error": "Sorry the resource you're looking for doesn't exits"}, 404
 
 @app.errorhandler(Unauthorized)
 def handle_unauthorized(e):
-    response = make_response(
-        {"message": "Unauthorized: You must be logged in to do that"},
-        401
-    )
+    # response = make_response(
+    #     {"message": "Unauthorized: You must be logged in to do that"},
+    #     401
+    # )
 
-    return response
+    # return response
+    return {"error": "Unauthorized: You must be logged in to do that"}, 401
+
 
 if __name__ == '__main__':
     app.run(port=5555)

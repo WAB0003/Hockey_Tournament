@@ -29,7 +29,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           }
           console.log(game1Objupate)
 
-          fetch ("http://127.0.0.1:5555/games/1", {
+          fetch ("/games/1", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -51,7 +51,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
         }
         // console.log(game5home_team)
         // debugger
-        fetch ("http://127.0.0.1:5555/games/5", {
+        fetch ("/games/5", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -82,7 +82,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           }
         //   console.log(game2Objupate)
 
-          fetch ("http://127.0.0.1:5555/games/2", {
+          fetch ("/games/2", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -103,7 +103,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
         }
         // console.log(game5home_team)
         // debugger
-        fetch ("http://127.0.0.1:5555/games/5", {
+        fetch ("/games/5", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -134,7 +134,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           }
         //   console.log(game2Objupate)
 
-          fetch ("http://127.0.0.1:5555/games/3", {
+          fetch ("/games/3", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -155,7 +155,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
             game6home_team = {home_team_id : game3_object.away_team.id}
         }
         // debugger
-        fetch ("http://127.0.0.1:5555/games/6", {
+        fetch ("/games/6", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -186,7 +186,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           }
 
 
-          fetch ("http://127.0.0.1:5555/games/4", {
+          fetch ("/games/4", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -206,7 +206,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
             game6away_team = {away_team_id : game4_object.away_team.id}
         }
 
-        fetch ("http://127.0.0.1:5555/games/6", {
+        fetch ("/games/6", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -237,7 +237,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           }
           console.log(game5Objupate)
 
-          fetch ("http://127.0.0.1:5555/games/5", {
+          fetch ("/games/5", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -258,7 +258,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
             finalGamehome_team = {home_team_id : game5_object.away_team.id}
         }
 
-        fetch ("http://127.0.0.1:5555/games/7", {
+        fetch ("/games/7", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -289,7 +289,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           }
 
 
-          fetch ("http://127.0.0.1:5555/games/6", {
+          fetch ("/games/6", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -310,7 +310,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
         }
         // console.log(game5home_team)
         // debugger
-        fetch ("http://127.0.0.1:5555/games/7", {
+        fetch ("/games/7", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",
@@ -341,7 +341,7 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
           }
 
 
-          fetch ("http://127.0.0.1:5555/games/7", {
+          fetch ("/games/7", {
               method: "PATCH",
               headers: {
                 "Content-Type":"application/json",

@@ -28,7 +28,7 @@ const AddTeamForm = ({handleAddTeam}) =>{
           }
         
         //add team to database
-        fetch("http://127.0.0.1:5555/teams", {
+        fetch("/teams", {
             method: "POST",
             headers: {
               "Content-Type":"application/json",

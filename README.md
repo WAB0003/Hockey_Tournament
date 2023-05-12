@@ -63,7 +63,7 @@ This will let us write our network requests like this:
 
 ```js
 fetch("/movies");
-// instead of fetch("http://127.0.0.1:5555/movies")
+// instead of fetch("/movies")
 ```
 
 To set up this proxy feature, open the `package.json` file in the `client`
@@ -125,7 +125,7 @@ $ npm start
 Verify that your app is working by visiting:
 
 - [http://127.0.0.1:4000](http://127.0.0.1:4000) to view the React application.
-- [http://127.0.0.1:5555/movies](http://127.0.0.1:5555/movies) to view the Flask
+- [/movies](/movies) to view the Flask
   application.
 
 We can also see how to make a request using `fetch()`. First though, let's

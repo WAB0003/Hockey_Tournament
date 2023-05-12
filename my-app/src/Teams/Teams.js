@@ -9,7 +9,7 @@ const Teams = () => {
     const [allTeams,setAllTeams]=useState([])
     
     useEffect(()=>{
-        fetch("http://127.0.0.1:5555/teams")
+        fetch("http://localhost:5555/teams")
         .then(r=>r.json())
         .then(teams=>setAllTeams(teams))
     },[])
@@ -22,7 +22,7 @@ const Teams = () => {
     //!Delete Team
     const deleteTeam = (team) => {
         // console.log(id)
-        fetch(`http://127.0.0.1:5555/teams/${team.id}`,{
+        fetch(`http://localhost:5555/teams/${team.id}`,{
         method: "DELETE",
         })
         .then(r=>r.json())
@@ -35,19 +35,19 @@ const Teams = () => {
     }
     //!Handle Adding A Player to a Team
     const handleAddPlayer = (playerName, team) => {
-        fetch('http://127.0.0.1:5555/players', {
+        fetch('http://localhost:5555/players', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name: playerName, team_id: team.id }),
         })
         .then(response => response.json())
         .then(newPlayer => {
-            setAllTeams(teams => teams.map(t => t.id === team.id ? {...t, players: [...t.players, newPlayer]} : t));
+            setAllTeams(teams => teams?.map(t => t.id === team.id ? {...t, players: [...t.players, newPlayer]} : t));
         })
     }
 
     //!Variable for displaying All Teams
-    const displayTeams = allTeams.map((team)=>{
+    const displayTeams = allTeams?.map((team)=>{
         return (
             <Table.Row>
                 <Table.Cell>{team.id}</Table.Cell>

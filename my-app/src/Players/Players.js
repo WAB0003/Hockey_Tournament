@@ -7,7 +7,7 @@ const Players = () => {
    const [allPlayers, setAllPlayers]=useState([])
 
    useEffect(()=>{
-    fetch("http://127.0.0.1:5555/players")
+    fetch("/players")
     .then(r=>r.json())
     .then(players=>setAllPlayers(players))
     },[])
