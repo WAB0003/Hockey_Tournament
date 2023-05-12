@@ -89,7 +89,7 @@ def make_games():
     #Game1
     all_games[0].home_points = randint(0,10)
     all_games[0].away_points = randint(0,10)
-    all_games[0].mvp_player_id = randint(0,12)
+
     #*Change for teams
     all_games[0].home_team_id = all_teams[1].id
     all_games[0].away_team_id = all_teams[2].id
@@ -100,7 +100,7 @@ def make_games():
     #Game2
     all_games[1].home_points = randint(0,10)
     all_games[1].away_points = randint(0,10)
-    all_games[1].mvp_player_id = randint(0,12)
+ 
     #*Change for teams
     all_games[1].home_team_id = all_teams[3].id
     all_games[1].away_team_id = all_teams[4].id
@@ -111,7 +111,7 @@ def make_games():
     #Game3
     all_games[2].home_points = randint(0,10)
     all_games[2].away_points = randint(0,10)
-    all_games[2].mvp_player_id = randint(0,12)
+
     #*Change for teams
     all_games[2].home_team_id = all_teams[5].id
     all_games[2].away_team_id = all_teams[6].id
@@ -122,7 +122,7 @@ def make_games():
     #Game4
     all_games[3].home_points = randint(0,10)
     all_games[3].away_points = randint(0,10)
-    all_games[3].mvp_player_id = randint(0,12)
+ 
     #*Change for teams
     all_games[3].home_team_id = all_teams[7].id
     all_games[3].away_team_id = all_teams[8].id

@@ -22,7 +22,7 @@ const Players = () => {
                 <Table.Cell>{player.id}</Table.Cell>
                 <Table.Cell>{player.team.name}</Table.Cell>
                 <Table.Cell>{player.name}</Table.Cell>
-                <Table.Cell>{player.times_mvp}</Table.Cell>
+                <Table.Cell>{player.mvp_games.length}</Table.Cell>
                 <Table.Cell>{player.player_ranking}</Table.Cell>
                 <Table.Cell>{player.total_points}</Table.Cell>
             </Table.Row>

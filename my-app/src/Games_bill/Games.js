@@ -400,8 +400,8 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
 
     if (allTeams.length === 9){
     return(
-        <div>
-        <h1>Bracket</h1>
+        <Container>
+        <h1 style={{paddingTop:"30px", textAlign:'center'}} >Tournament Bracket</h1>
         <Grid columns={3} divided>
             <Grid.Row>
                 <Grid.Column>
@@ -512,10 +512,10 @@ const Games = ({allTeams, setAllTeams, allGames, setAllGames}) => {
                 </Grid.Column>
             </Grid.Row>
         </Grid>
-        </div>
+        </Container>
     )
 } else {
-    return <h1>There Can Only Be 8 Teams</h1>
+    return <h1>There can only be 8 teams. Edit teams accordingly on Team Roster Page</h1>
 }
 }
 

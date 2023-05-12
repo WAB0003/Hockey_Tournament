@@ -1,30 +1,17 @@
 import React , {useState, useEffect}  from 'react';
 import 'semantic-ui-css/semantic.min.css'
-import { Table, Radio, Container, Header, Button, Form, Input } from 'semantic-ui-react'
-import MVPRadioDisplay from './MVPRadioDisplay';
+import {Button, Form } from 'semantic-ui-react'
+
 
 const FinalWinner = ({winningTeam}) => {
-    console.log(winningTeam.players)
+
     const [mvpPlayer, setMVPPlayer] = useState("")
-
-    console.log(mvpPlayer.length)
-
-    
-
-    // Create state to handle form:
     const [formData, setFormData] = useState({
         mvp_player_id: "",
         })
 
     // Destruction state of FormData:
     const {mvp_player_id} = formData
-
-    console.log(formData)
-    
-
-
-
-
 
     //! Handle Submit
     const handleMVPSubmit = () => {
@@ -47,28 +34,28 @@ const FinalWinner = ({winningTeam}) => {
             setMVPPlayer(updatedGame.mvp_player.name)
             } )
         }
+    const handleChange = (e) => {
+        setFormData({...formData, 
+        mvp_player_id:e.target.value,
+        })
+    }
 
     //!Create a display for each team player by mapping through team and sending to display component
     const displayPlayers = winningTeam.players.map((player)=>{
-            return(<MVPRadioDisplay key={player.id} player={player} formData={formData} setFormData={setFormData} />)
+        return <option key={player.id} value={player.id}>{player.name}</option>
         })
-
-    
-    
-
 
     return(
         <>
         <h2>Winning Team: {winningTeam.name}</h2>
         <p>Choose MVP Player:</p>
         <Form key={winningTeam.id}>
-            {displayPlayers}
+            <Form.Field label='Select MVP' control='select' onChange={handleChange}>
+                {displayPlayers}
+            </Form.Field>
             <Button type='submit'onClick={handleMVPSubmit}>Submit MVP</Button>
         </Form>
         {mvpPlayer.length > 0 ? <h2>MVP: {mvpPlayer}</h2> : <h2></h2>}
-
-           
-        
         </>
         )
 }
