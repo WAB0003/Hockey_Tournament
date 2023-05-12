@@ -5,7 +5,9 @@ import MVPRadioDisplay from './MVPRadioDisplay';
 
 const FinalWinner = ({winningTeam}) => {
     console.log(winningTeam.players)
+    const [mvpPlayer, setMVPPlayer] = useState("")
 
+    console.log(mvpPlayer.length)
 
     
 
@@ -18,6 +20,7 @@ const FinalWinner = ({winningTeam}) => {
     const {mvp_player_id} = formData
 
     console.log(formData)
+    
 
 
 
@@ -25,12 +28,12 @@ const FinalWinner = ({winningTeam}) => {
 
     //! Handle Submit
     const handleMVPSubmit = () => {
-        //Create new team object that pull information from formData
+        //create object for updated game
         const newGameUpdate = {
             mvp_player_id: mvp_player_id,
             }
         
-        //add team to database
+        //update game in database
         fetch("/games/7", {
             method: "PATCH",
             headers: {
@@ -41,15 +44,11 @@ const FinalWinner = ({winningTeam}) => {
             .then((r)=>r.json())
             .then((updatedGame)=>{
             console.log(updatedGame)
+            setMVPPlayer(updatedGame.mvp_player.name)
             } )
         }
 
-
-
-
-
-
-
+    //!Create a display for each team player by mapping through team and sending to display component
     const displayPlayers = winningTeam.players.map((player)=>{
             return(<MVPRadioDisplay key={player.id} player={player} formData={formData} setFormData={setFormData} />)
         })
@@ -66,6 +65,8 @@ const FinalWinner = ({winningTeam}) => {
             {displayPlayers}
             <Button type='submit'onClick={handleMVPSubmit}>Submit MVP</Button>
         </Form>
+        {mvpPlayer.length > 0 ? <h2>MVP: {mvpPlayer}</h2> : <h2></h2>}
+
            
         
         </>

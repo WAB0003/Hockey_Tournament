@@ -20,13 +20,22 @@ const MVPRadioDisplay = ({player, formData, setFormData}) => {
     
 
     return(
-        <Form.Field
-                control={Radio}
-                label={player.name}
-                value={player.id}
-                checked={value === player.id}
-                onChange={handleChange}
-            />
+        // <Form.Field
+        //         control={Radio}
+        //         label={player.name}
+        //         value={player.name}
+        //         checked={value === player.id}
+        //         onChange={handleChange}
+        //     />
+            <Form.Field
+            label={player.name}
+            control='input'
+            value={player.id}
+            type='radio'
+            // checked={value === player.id}
+            name={player.id}
+            onChange={handleChange}
+          />
     )
 
 }
