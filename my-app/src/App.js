@@ -6,6 +6,7 @@ import { TournamentProvider } from "./Games/TournamentContext";
 import Navbar from "./Navbar";
 import Teams from "./Teams/Teams";
 import Players from "./Players/Players";
+import Games from "./Games_bill/Games";
 import Authentication from "./Authentication";
 
 const App = () => {
@@ -49,7 +50,7 @@ const App = () => {
         <Route exact path="/"/>
         <Route path="/teams" element={<Teams/>}/>
         <Route path="/players" element={<Players />}/>
-        <Route path="/games" element={<Tournament />}/>
+        <Route path="/games" element={<Games />}/>
         <Route path="/login" element={<Authentication updateUser={updateUser}/>}/>
       </Routes>
     </TournamentProvider>
